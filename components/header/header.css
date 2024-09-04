@@ -22,6 +22,7 @@ nav {
   justify-content: flex-end;
   list-style-type: none;
   padding: 0; /* Optional: Add padding for better appearance */
+  ;
 }
 
 .nav-header a {

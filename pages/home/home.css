@@ -5,14 +5,63 @@ body {
   margin: 0;
 }
 
-.content {
+main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 90vh;
 }
 
-.header {
-  margin: 0;
-  padding: 0;
+.box-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.yellow-box {
+  background-color: #E2C044;
+  border-radius: 20px;
+  padding: 1em;
+  height: 80%;
+  width: 60%;
+  right: 35%; /* Adjust this value to control the overlap */
+  position: relative; /* Change to relative */
+  z-index: 1; /* Ensure yellow box is behind the blue box */
+  order: 1; /* Set order to 1 to make it come first */
+}
+
+.blue-box {
+  background-color: #2E5266;
+  border-radius: 20px;
+  padding: 1em;
+  height: 60%;
+  width: 40%;
+  position: relative;
+  left: 53%; /* Adjust this value to control the overlap */
+  z-index: 2; /* Ensure blue box is in front of the yellow box */
+}
+
+.social-media-container {
+
+  border: 2px solid black;
+  padding: 1em; /* Add padding to ensure the container has height */
+  position: absolute; /* Change to absolute */
+  bottom: 0; /* Position at the bottom */
+  width: 100%; /* Ensure it takes the full width of the parent */
+}
+
+.social-media {
+  display: flex;
+  align-items: center;
+}
+
+.social-media-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.social-media-link i {
+  margin-right: 0.5em; /* Add space between the icon and text */
 }

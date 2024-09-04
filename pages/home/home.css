@@ -11,3 +11,8 @@ body {
   align-items: center;
   height: 100vh;
 }
+
+.header {
+  margin: 0;
+  padding: 0;
+}

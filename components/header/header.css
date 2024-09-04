@@ -1,15 +1,18 @@
 /* header.css */
 
+
 .nav-header {
   display: flex;
   justify-content: flex-end;
-  /* background-color: #9FB1BC; */
+  background-color: #9FB1BC; 
   padding: 0; 
   margin: 0;
 }
 
 nav {
-  width: 370px; /* Sets the width to 50% */
+  justify-content: center;
+  align-items: center;
+  width: 410px; /* Sets the width to 50% */
   padding-left: 0;
   box-shadow: -5px 5px 5px #2E5266;
 }
@@ -24,7 +27,9 @@ nav {
 .nav-header a {
   text-decoration: none;
   color: #000; /* Adjust the color as needed */
-  padding: 10px; /* Optional: Add padding for better appearance */
+  padding: 15px; /* Optional: Add padding for better appearance */;
+  margin: 0;
+  font-size: 1.2em; /* Adjust the font size as needed */
 }
 
 .nav-list a:hover {

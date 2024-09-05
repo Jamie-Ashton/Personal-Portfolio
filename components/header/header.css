@@ -1,40 +1,43 @@
-/* header.css */
-
-
 .nav-header {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   background-color: #9FB1BC; 
   padding: 0; 
   margin: 0;
+  box-sizing: border-box; /* Add this line */
+  box-shadow: 15px 1px 15px #2E5266;
 }
 
 nav {
   justify-content: center;
   align-items: center;
-  width: 410px; /* Sets the width to 50% */
+  width: 50%; /* Sets the width to 50% */
   padding-left: 0;
-  box-shadow: -5px 5px 5px #2E5266;
+  /* box-shadow: -5px 5px 5px #2E5266;  */
 }
 
 .nav-list {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between; /* Change to space-between or space-around */
   list-style-type: none;
-  padding: 0; /* Optional: Add padding for better appearance */
-  ;
+  padding: 5px; /* Optional: Add padding for better appearance */
+  margin: 0;
 }
 
 .nav-header a {
   text-decoration: none;
   color: #000; /* Adjust the color as needed */
-  padding: 15px; /* Optional: Add padding for better appearance */;
+  padding: 5px; /* Optional: Add padding for better appearance */
   margin: 0;
   font-size: 1.2em; /* Adjust the font size as needed */
+  box-sizing: border-box; /* Add this line */
 }
 
 .nav-list a:hover {
   background-color: #2E5266;
   color: #E2C044;
-  border-radius: 20px;
+  border-radius: 4px;
+  margin: 0;
+  padding: 4px 5px;
+  box-sizing: border-box; 
 }

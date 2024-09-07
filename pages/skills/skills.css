@@ -36,6 +36,16 @@ main {
   border: none; /* Remove the border if any */
 }
 
+.container.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  color: black;
+  direction: row;
+}
+
+
 .skill-container h2 {
   color: #E2C044;
   display: flex;
@@ -45,14 +55,22 @@ main {
   font-weight: bold;
 }
 
-.skill-container.one p {
-  color: #E2C044;
-  font-weight: bold;
-  margin: 1em;
-}
-
 .skill-container.three p {
   display: flex;
   justify-content: flex-end;
   padding-left: 10em;
 }
+
+.material-symbols-outlined {
+  padding: 0.5em;
+  font-size: 30em;
+}
+
+.skill-container p {
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: lighter;
+}
+

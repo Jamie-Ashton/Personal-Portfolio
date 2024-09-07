@@ -5,7 +5,8 @@
   padding: 0; 
   margin: 0;
   box-sizing: border-box; /* Add this line */
-  box-shadow: 15px 1px 15px #2E5266;
+  position: relative; /* Add this line */
+  /* box-shadow: 15px 1px 15px #2E5266; */
 }
 
 nav {
@@ -40,4 +41,31 @@ nav {
   margin: 0;
   padding: 4px 5px;
   box-sizing: border-box; 
+  font-weight: bold;
+}
+
+.nav-header::before {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 5%;
+  width: 90%;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(10px);
+}
+
+.nav-header::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 5%;
+  width: 90%;
+  height: 90px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(10px);
 }

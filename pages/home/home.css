@@ -22,28 +22,24 @@ main {
 }
 
 .box-container .blue-box {
+  position: absolute;
   background-color: #2E5266;
   border-radius: 20px;
-  padding: 1em;
   height: 60%;
   width: 40%;
-  position: relative;
-  left: 53%; /* Adjust this value to control the overlap */
-  order: 0;
+  left: 55%; /* Adjust this value to control the overlap */
 }
 
 .box-container .yellow-box {
   background-color: #E2C044;
   border-radius: 20px;
-  padding: 1em;
   height: 80%;
   width: 60%;
-  right: 35%; /* Adjust this value to control the overlap */
+  right: 15%; /* Adjust this value to control the overlap */
   position: relative; /* Change to relative */
-  order: 1;
 }
 
-.box-container .blue-box:before,
+.box-container .blue-box::before,
 .box-container .yellow-box:before {
   content: '';
   position: absolute;
@@ -102,8 +98,61 @@ main {
 
 .social-media-link i {
   margin-right: 2em; 
+  text-shadow: 6px 29px 40px black;
 }
 
 .social-media-link:hover {
   transform: translateY(10px);
+}
+
+
+h1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 4em;
+  height: 50vh;
+  color: black;
+  text-shadow: 6px 29px 40px black;
+  
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 2.5em;
+  height: 60vh;
+  color: #E2C044;
+  text-shadow: 6px 29px 40px black;
+}
+
+ h2:before,
+ h1:before {
+  content: '';
+  position: absolute;
+  bottom: -40px;
+  left: 5%;
+  width: 90%;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(10px);
+}
+
+h2:after,
+h1:after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 5%;
+  width: 90%;
+  height: 90px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(10px);
 }

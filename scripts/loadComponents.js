@@ -18,8 +18,7 @@ function loadComponent(elementId, filePath) {
 
 // Load the components when the window has finished loading
 window.onload = function () {
-    // loadComponent('side-nav', 'components/header/header.html'); // Load the side-nav component into the div with ID 'side-nav'
     loadComponent('header', 'components/header/header.html'); // Load the header component into the div with ID 'header'
-    // loadComponent('footer', '/workspace/WEB504-A1-Example/components/footer/footer.html'); // Load the footer component into the div with ID 'footer'
+    loadComponent('footer', 'components/footer/footer.html'); // Load the footer component into the div with ID 'footer'
 };
 

@@ -69,3 +69,126 @@ nav {
   z-index: -1;
   filter: blur(10px);
 }
+
+@media (max-width: 1160px) {
+
+  .box-container {
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.9em; /* Adjust the font size as needed */
+  }
+
+  .social-media-link {
+    padding: 5px;
+    font-size: 0.9em; /* Adjust the font size as needed */
+  }
+
+  .social-media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 1055px) {
+
+  .box-container {
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.6em; /* Adjust the font size as needed */
+  }
+
+  .social-media-link {
+    padding: 5px;
+    font-size: 0.8em; /* Adjust the font size as needed */
+  }
+
+  .social-media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 970px) {
+  .box-container {
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.6em; /* Adjust the font size as needed */
+  }
+
+  .social-media-link {
+    padding: 5px;
+    font-size: 0.7em; /* Adjust the font size as needed */
+  }
+
+  .social-media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 767px) {
+  .box-container {
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.6em; /* Adjust the font size as needed */
+  }
+
+  .social-media-link {
+    padding: 5px;
+    font-size: 0.6em; /* Adjust the font size as needed */
+  }
+
+  .social-media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 690px) {
+  .nav-header {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  nav {
+    width: 100%;
+    padding: 0;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav-list a {
+    padding: 10px;
+    font-size: 1em;
+  }
+
+  .nav-header::before,
+  .nav-header::after {
+    display: none; /* Hide the pseudo-elements on small screens */
+  }
+
+  .box-container {
+    padding: 10px;
+    margin: 10px;
+    font-size: 0.5em; /* Adjust the font size as needed */
+  }
+
+  .social-media-link {
+    padding: 5px;
+    font-size: 0.3em; /* Adjust the font size as needed */
+  }
+
+  .social-media-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}

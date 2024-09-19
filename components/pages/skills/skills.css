@@ -14,6 +14,10 @@ main {
 }
 
 .skill-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #6E8898;
   width: 7em;
   height: 10em;
@@ -21,6 +25,7 @@ main {
   margin: 1em;
   margin-top: 3em;
   flex: 1 1 calc(50% - 2em); /* Adjust the width to fit 2 columns */
+  box-shadow: 5px 18px 30px black;
 }
 
 .skill-container:nth-child(2),
@@ -34,9 +39,10 @@ main {
 .skill-container:nth-child(18) {
   background-color: transparent; /* Make every second container blank */
   border: none; /* Remove the border if any */
+  box-shadow: none; /* Remove the shadow if any */
 }
 
-.container.icon {
+.container .icon {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,15 +61,11 @@ main {
   font-weight: bold;
 }
 
-.skill-container.three p {
-  display: flex;
-  justify-content: flex-end;
-  padding-left: 10em;
-}
 
 .material-symbols-outlined {
-  padding: 0.5em;
-  font-size: 30em;
+  padding: 0.2em;
+  font-size: 2em;
+  justify-content: center;
 }
 
 .skill-container p {

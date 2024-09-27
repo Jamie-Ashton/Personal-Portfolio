@@ -11,6 +11,11 @@
     <!-- <link rel="stylesheet" href="components/header/header.css"> -->
     <script src="../../../scripts/loadComponents.js" defer></script>
     <script src="../../../scripts/authUser.js" defer></script>
+    <script src="app.js" defer></script>
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 </head>
 <body>
     <div class="container">
@@ -26,11 +31,11 @@
                     <span class="top-right-h2">
                         <h2>Enter Your Email...</h2>
                     </span>
-                    <textarea id="message" name="message" rows="4" cols="50">
+                    <textarea id="message" name="message" rows="50" cols="50" placeholder="Start typing here...">
                     </textarea>
                 </div>
                 <div class="submit-button-container">
-                    <button class="submit-button">
+                    <button class="submit-button" id="submit-button">
                         Submit</button>                   
                 </div>
         </div>

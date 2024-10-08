@@ -1,103 +1,105 @@
 body {
-    background-color: #9FB1BC;
-    font-family: 'JetBrains Mono', monospace;
-    padding: 0;
-    margin: 0;
-}
-
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.outer-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 80%;
-  height: 80%;
-  background-color: #2E5266;
-  border-radius: 20px;
-}
-
-.h1-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #6E8898;
-  border-radius: 20px;
-  padding: 0em 1em; /* Optional: Add some padding for better appearance */
-  width: 35%;
-  margin: 1em 2em;
-}
-
-h1.contact-me-header {
-  color: #E2C044; /* Change this to your desired color */
-  font-size: 3em;
-  font-weight: bold;
-  padding: 10;
+  background-color: #9FB1BC;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 0;
   margin: 0;
 }
 
+main {
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+}
+
+.outer-container {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+width: 80%;
+height: 80%;
+background-color: #2E5266;
+border-radius: 20px;
+}
+
+.h1-wrapper {
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #6E8898;
+border-radius: 20px;
+padding: 0em 1em; /* Optional: Add some padding for better appearance */
+width: 35%;
+margin: 1em 2em;
+}
+
+h1.contact-me-header {
+color: #E2C044; /* Change this to your desired color */
+font-size: 3em;
+font-weight: bold;
+padding: 10;
+margin: 0;
+}
+
 .submit-button-container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+display: flex;
+justify-content: flex-end;
+align-items: flex-end;
 }
 
 .submit-button {
-  font-size: 1.4em;
-  padding: 0.3em 1.5em;
-  background: linear-gradient(to bottom, #2E5266, #2E5266);
-  border: 0.2em 1em solid #9FB1BC; 
-  color: #E2C044; 
-  border-radius: 1.875em;
-  cursor: pointer;
-  font-weight: medium;
-  flex-shrink: 0;
-  margin: 1em;
+font-size: 1.4em;
+padding: 0.3em 1.5em;
+background: linear-gradient(to bottom, #2E5266, #2E5266);
+border: 0.2em 1em solid #9FB1BC; 
+color: #E2C044; 
+border-radius: 1.875em;
+cursor: pointer;
+font-weight: medium;
+flex-shrink: 0;
+margin: 1em;
 }
 
 .inner-container {
-  border-radius: 20px;
-  padding: 0;
-  margin: 1em;
-  height: 80%;
-  background-color: #9FB1BC;
+display: flex;
+flex-direction: column;
+border-radius: 20px;
+padding: 0;
+margin: 1em;
+height: 80%;
+background-color: #9FB1BC;
 }
 
 
 .top-right-h2 {
-   background-color: #6E8898;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   border-radius: 20px;
-   padding: 0em 1em; /* Optional: Add some padding for better appearance */
-   width: 45%;
-   margin: 1em 2em;
-  
+ background-color: #6E8898;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ border-radius: 20px;
+ padding: 0em 1em; /* Optional: Add some padding for better appearance */
+ width: 45%;
+ margin: 1em 2em;
+
 }
 
 
 h2 {
-   color: #E2C044; /* Change this to your desired color */
-   font-size: 2em;
-   font-weight: bold;
-   margin: 0; /* Remove default margin */
-  
+ color: #E2C044; /* Change this to your desired color */
+ font-size: 2em;
+ font-weight: bold;
+ margin: 0; /* Remove default margin */
+
 }
 
 textarea {
-  background-color: #6E8898;
-  border-radius: 20px;
-  margin: 0em 1em;
-  height: 82%;
-  width: 96.5%;
-  border: none;
-  resize: none;
-  font-size: 1.5em;
-  vertical-align: top;
+background-color: #6E8898;
+border-radius: 20px;
+margin: 0em 0em;
+height: 20%;
+width: auto;
+border: none;
+resize: none;
+font-size: 1.5em;
+padding: 0.5em;
 }

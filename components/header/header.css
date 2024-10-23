@@ -12,7 +12,7 @@
 nav {
   justify-content: center;
   align-items: center;
-  width: 50%; /* Sets the width to 50% */
+  min-width: 80%; /* Sets the width to 50% */
   padding-left: 0;
   /* box-shadow: -5px 5px 5px #2E5266;  */
 }
@@ -28,7 +28,7 @@ nav {
 .nav-header a {
   text-decoration: none;
   color: #000; /* Adjust the color as needed */
-  padding: 5px; /* Optional: Add padding for better appearance */
+  padding: 7px; /* Optional: Add padding for better appearance */
   margin: 0;
   font-size: 1.2em; /* Adjust the font size as needed */
   box-sizing: border-box; /* Add this line */

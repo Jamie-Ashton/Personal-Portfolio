@@ -1,6 +1,6 @@
 import { app } from "../../../scripts/firebaseSDK.js";
 import { GoogleAuthProvider, getAuth, createUserWithEmailAndPassword, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"; // Ensure signOut is imported
-import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     // Show the modal when the page loads
@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 chatInput.value = '';
 
                 // push chat-input to firebase
-                // Get a reference to the database service
                 if(message.length > 0) {	
                     const database = getDatabase(app);
                     const chatRef = ref(database, 'chat');
@@ -79,7 +78,24 @@ document.addEventListener('DOMContentLoaded', function() {
                         uid: result.user.uid
                     });
              }
+            
+            //  Fetch and render chat messages from firebase
+            const database = getDatabase(app);
+            const chatRef = ref(database, 'chat');
+            console.log(chatRef);
 
+            onValue(chatRef, (snapshot) => {
+                // Clear current chat display
+                chatDiv.innerHTML = '';
+                snapshot.forEach((childSnapshot) => {
+                    const chatItem = childSnapshot.val();
+                    if (chatItem.uid === result.user.uid) {  // Filter by user UID
+                        const p = document.createElement('p');
+                        p.textContent = `${chatItem.user}: ${chatItem.message}`;
+                        chatDiv.appendChild(p);
+                    }
+                });
+            });
     }
 });
 

@@ -160,22 +160,22 @@ height: 100vh;
 
 #chat-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
   width: 90%;
   height: 90%;
   background-color: #2E5266;
   border-radius: 12px;
+  padding-bottom: 20px; /* Optional for spacing */
 }
 
 #chat {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
+  flex-direction: column;
+  justify-content: space-between; 
   width: 90%;
-  height: 90%;
   background-color: #2E5266;
   border-radius: 12px;
   margin: 10px;
@@ -184,6 +184,7 @@ height: 100vh;
 }
 
 #chat-input {
+  display: flex;
   width: 90%;
   height: 60px;
   border-radius: 12px;

@@ -179,7 +179,7 @@ height: 100vh;
   background-color: #2E5266;
   border-radius: 12px;
   margin: 10px;
-  padding: 10px;
+  padding: 7px;
   overflow-y: auto;
 }
 
@@ -195,5 +195,75 @@ height: 100vh;
   border: none;
 }
 
+#admin-wrapper,
+#user-wrapper {
+    max-width: 70%;  /* Set maximum width to 70% of the chat container */
+    border-radius: 12px;
+    margin: 2px 0;  /* Adjust the vertical margin */
+    padding: 5px;
+    word-wrap: break-word; /* Ensure long words break and fit inside */
+}
 
+#admin-wrapper {
+    text-align: left;  /* Aligns the text to the left */
+    margin-right: auto;  /* Pushes the element to the left */
+    margin-left: 0;  /* Ensures no extra margin on the left */
+    background-color: #E2C044;
+}
+
+#user-wrapper {
+    margin-left: auto;  /* Pushes the element to the right */
+    margin-right: 0;  /* Ensures no extra margin on the right */
+    background-color: #E2C044;
+}
+
+#user-message,
+#admin-message {
+    font-size: 1.2em;
+    color: #1f1f1f;
+    margin: 0;
+    padding: 2px;
+}
+
+#message-date {
+    font-size: 0.8em;
+    color: #747775;
+    margin: 0;
+    padding: 2px;
+}
+
+#chat-header {
+    padding: 7px;
+    margin-bottom: auto;
+    display: flex;
+    justify-content: space-between; /* Ensures the spacing between elements */
+    align-items: center; /* Aligns items vertically in the center */
+    width: 95%;
+}
+
+#displayName {
+    color: #E2C044;
+    margin-right: auto;
+}
+
+#signOutBtn {
+    margin-left: auto; /* Pushes the element to the right */
+    margin-right: 0;
+}
+
+#contactList {
+    width: 70%; /* Full width */
+    border-radius: 12px; /* Rounded corners */
+    border: 1px solid #747775; /* Border color matching your theme */
+    background-color: #E2C044; /* Background color */
+    color: #1f1f1f; /* Text color */
+    font-size: 1.2em; /* Font size matching your theme */
+}
+
+.message-text {
+    font-size: 1.2em;
+    color: #1f1f1f;
+    margin: 0;
+    padding: 2px
+}
 

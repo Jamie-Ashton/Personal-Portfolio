@@ -29,39 +29,41 @@ function signOutUser() {
 }
 
 function reset() {
-    const chatDiv = document.getElementById('chat');
-    const chatInput = document.getElementById('chat-input');
-    const chatInputBtn = document.getElementById('chat-input-btn');
-    const contactList = document.getElementById('contactList');
-    contactList.style.display = 'none';
-    chatInputBtn.style.display = 'none';
-    chatInput.style.display = 'none';
-    chatDiv.innerHTML = '';
+    const chat = document.getElementById('chat-container');
+    chat.innerHTML = '';
 }
 
-
-
-// SECTION: Creating chat elements
+// SECTION: Creating chat 
 function setupChatElements(result) {
     const chatContainerDiv = document.getElementById('chat-container');
-    
+
+    // Create the header div
+    const headerDiv = document.createElement('div');
+    headerDiv.id = 'chat-header';
+    chatContainerDiv.appendChild(headerDiv);
+
     // Create drop down if user is 'admin'
     if (result.user.uid === 'yfu9ldpAkpQwqKlDkzXdsgHJDo32') {
-        // Test 
         console.log('Admin user');
         loadContacts();
 
         // Create a dropdown menu of contacts
         const contactList = document.createElement('select');
         contactList.id = 'contactList';
-        chatContainerDiv.appendChild(contactList);
+        headerDiv.appendChild(contactList); // Append dropdown menu to the header
 
         // Load chat messages for selected contact
         contactList.addEventListener('change', (e) => {
             const selectedUid = e.target.value;
             console.log('Selected UID:', selectedUid);
             loadChatMessages(chatDiv, selectedUid);
-        });	
+        });
+    } else {
+        // Append the displayName to the header for non-admin users
+        const displayName = document.createElement('h3');
+        displayName.id = 'displayName';
+        displayName.textContent = result.user.displayName;
+        headerDiv.appendChild(displayName); // Append the display name to the header
     }
 
     // Create Sign Out Button
@@ -76,11 +78,11 @@ function setupChatElements(result) {
             console.error('Error signing out:', error);
         });
     };
-    chatContainerDiv.appendChild(signOutBtn);
+    headerDiv.appendChild(signOutBtn); // Append Sign Out Button to the header
 
-
-    const chatDiv = document.getElementById('chat');
-    // chatDiv.id = 'chat';
+    // Create Chat Div
+    const chatDiv = document.getElementById('chat') || document.createElement('div');
+    chatDiv.id = 'chat';
     chatContainerDiv.appendChild(chatDiv);
 
     // Create Chat Input
@@ -89,7 +91,7 @@ function setupChatElements(result) {
     chatInput.placeholder = 'Type your message here';
     chatInput.type = 'text';
     chatContainerDiv.appendChild(chatInput);
-    
+
     // Create Send Button
     const chatInputBtn = document.createElement('button');
     chatInputBtn.id = 'chat-input-btn';
@@ -100,10 +102,7 @@ function setupChatElements(result) {
     setupChatInputListener(chatInput, result);
 }
 
-
-
-
-// SECTION: "Enter key Listener"
+// SECTION: input messages listener
 function setupChatInputListener(chatInput, result) {
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
@@ -119,42 +118,93 @@ function setupChatInputListener(chatInput, result) {
 }
 
 
-// SECTION: save chat messages
+// SECTION: saving messages
 function saveChatMessage(message, result) {
     const database = getDatabase(app);
     const chatRef = ref(database, 'chat');
     const newChatRef = push(chatRef);
     const currentDate = new Date().toLocaleString();
-    set(newChatRef, {
-        message: message,
-        user: result.user.displayName,
-        date: currentDate,
-        uid: result.user.uid,
-        email: result.user.email
-    });
+    
+    // Check if the user is admin
+    if(result.user.uid === 'yfu9ldpAkpQwqKlDkzXdsgHJDo32'){
+        // Get the selected value from the dropdown
+        const selectedEmail = document.getElementById('contactList').value;
+        set(newChatRef, {
+            message: message,
+            user: result.user.displayName,
+            date: currentDate,
+            uid: result.user.uid,
+            select: selectedEmail 
+        });
+    } else {
+        set(newChatRef, {
+            message: message,
+            user: result.user.displayName,
+            date: currentDate,
+            uid: result.user.uid,
+            email: result.user.email
+        });
+    }
 }
+
+
 
 // SECTION: Load chat messages
 function loadChatMessages(chatDiv, userId) {
     const database = getDatabase(app);
     const chatRef = ref(database, 'chat');
-    
+    const adminUID = 'yfu9ldpAkpQwqKlDkzXdsgHJDo32';  // Admin UID
+
     onValue(chatRef, (snapshot) => {
         chatDiv.innerHTML = '';  // Clear current chat display
-        
+
         snapshot.forEach((childSnapshot) => {
             const chatItem = childSnapshot.val();
-            if (chatItem.uid === userId) {  // Filter by user UID
-                const p = document.createElement('p');
-                p.textContent = `${chatItem.user}: ${chatItem.message}`;
-                chatDiv.appendChild(p);
+            
+            // Check if the message is from the user or to the user from the admin
+            const isUserMessage = chatItem.uid === userId;
+            const isAdminMessage = chatItem.select === userId;
+
+            if (isUserMessage || isAdminMessage) {
+                const messageWrapper = document.createElement('div');
+                messageWrapper.classList.add('message-wrapper');
+
+                // User element
+                const userElement = document.createElement('span');
+                userElement.textContent = chatItem.user;
+                userElement.classList.add('message-user');
+                
+                // Message text element
+                const messageText = document.createElement('p');
+                messageText.innerHTML = `${chatItem.message}`;
+                messageText.classList.add('message-text');
+                
+                // Date element
+                const messageDate = document.createElement('span');
+                messageDate.textContent = chatItem.date;
+                messageDate.id = 'message-date';
+
+                // Set different classes based on who wrote the message
+                if (chatItem.uid === userId) {
+                    userElement.id = 'user-user';
+                    messageWrapper.id = 'user-wrapper';  // ID for the user wrapper
+                } else if (chatItem.uid === adminUID) {
+                    userElement.id = 'admin-user';
+                    messageWrapper.id = 'admin-wrapper';  // ID for the admin wrapper
+                }
+
+                // Append elements to the wrapper
+                messageWrapper.appendChild(userElement);
+                messageWrapper.appendChild(messageText);
+                messageWrapper.appendChild(messageDate);
+
+                // Append the wrapper to the chatDiv
+                chatDiv.appendChild(messageWrapper);
             }
         });
     });
 }
-
-
-
+// SECTION: Load contacts
 function loadContacts() {
     const database = getDatabase(app);  // Initialize the database
     const chatRef = ref(database, 'chat');  // Reference the 'chat' path
@@ -164,11 +214,17 @@ function loadContacts() {
         
         snapshot.forEach((childSnapshot) => {
             const chatItem = childSnapshot.val();
-            uniqueUsers.set(chatItem.uid, chatItem.email); // Add user email to Map
+            if (!uniqueUsers.has(chatItem.uid)) {
+                uniqueUsers.set(chatItem.uid, chatItem.email); // Add user email to Map only if not already added
+            }
         });
 
         // Log the unique UIDs and users
         console.log('Unique Users:', Array.from(uniqueUsers.entries())); // Convert Map to array and log entries
+        
+        // Clear existing options
+        const contactList = document.getElementById('contactList');
+        contactList.innerHTML = '';
 
         // Append emails to contact list
         uniqueUsers.forEach((email, uid) => {

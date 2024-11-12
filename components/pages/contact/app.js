@@ -1,6 +1,6 @@
 import { app } from "../../../scripts/firebaseSDK.js";
 import { GoogleAuthProvider, getAuth, createUserWithEmailAndPassword, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import { getDatabase, ref, push, set, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
 const database = getDatabase(app);
 
@@ -31,6 +31,9 @@ function signOutUser() {
 function reset() {
     const chat = document.getElementById('chat-container');
     chat.innerHTML = '';
+    // This will refresh the page
+    location.reload();
+
 }
 
 // SECTION: Creating chat 
@@ -184,6 +187,11 @@ function loadChatMessages(chatDiv, userId) {
                 messageDate.textContent = chatItem.date;
                 messageDate.id = 'message-date';
 
+                // Material icon element
+                const editIcon = document.createElement('span');
+                editIcon.classList.add('material-symbols-outlined', 'edit-button');
+                editIcon.textContent = 'edit';
+
                 // Set different classes based on who wrote the message
                 if (chatItem.uid === userId) {
                     userElement.id = 'user-user';
@@ -192,11 +200,15 @@ function loadChatMessages(chatDiv, userId) {
                     userElement.id = 'admin-user';
                     messageWrapper.id = 'admin-wrapper';  // ID for the admin wrapper
                 }
+                
+                // Pass the chatItemRef to the editMessage function
+                editIcon.addEventListener('click', () => editMessage(chatItem, childSnapshot.ref));
 
                 // Append elements to the wrapper
                 messageWrapper.appendChild(userElement);
                 messageWrapper.appendChild(messageText);
                 messageWrapper.appendChild(messageDate);
+                messageWrapper.appendChild(editIcon);  // Append the Material Icon
 
                 // Append the wrapper to the chatDiv
                 chatDiv.appendChild(messageWrapper);
@@ -204,18 +216,22 @@ function loadChatMessages(chatDiv, userId) {
         });
     });
 }
+
+
+
 // SECTION: Load contacts
 function loadContacts() {
     const database = getDatabase(app);  // Initialize the database
     const chatRef = ref(database, 'chat');  // Reference the 'chat' path
+    const adminUID = 'yfu9ldpAkpQwqKlDkzXdsgHJDo32'; // Define the admin UID
 
     onValue(chatRef, (snapshot) => {
         const uniqueUsers = new Map(); // Use a Map to store unique users by their UID
         
         snapshot.forEach((childSnapshot) => {
             const chatItem = childSnapshot.val();
-            if (!uniqueUsers.has(chatItem.uid)) {
-                uniqueUsers.set(chatItem.uid, chatItem.email); // Add user email to Map only if not already added
+            if (chatItem.uid !== adminUID && chatItem.email && !uniqueUsers.has(chatItem.uid)) {
+                uniqueUsers.set(chatItem.uid, chatItem.email.trim()); // Add user email to Map only if not already added and trim it
             }
         });
 
@@ -228,11 +244,86 @@ function loadContacts() {
 
         // Append emails to contact list
         uniqueUsers.forEach((email, uid) => {
-            const option = document.createElement('option');
-            option.value = uid;
-            option.textContent = email;
-            contactList.appendChild(option);
+            if (email && email !== 'undefined') { // Ensure the email is not undefined or an empty string
+                const option = document.createElement('option');
+                option.value = uid;
+                option.textContent = email;
+                contactList.appendChild(option);
+            }
         });
+
+        // Reset the dropdown selection to ensure the user can select an option
+        contactList.selectedIndex = -1; // Deselect any default selection
+    });
+}
+
+
+
+
+// ADDITIONAL: check to make sure the current user matches user chat id before allowing them to edit...
+// SECTION: Edit messages
+function editMessage(chatItem, chatItemRef) {
+    console.log('Edit message:', chatItem.message);
+
+    const messageWrapper = event.target.parentElement;
+    const messageText = messageWrapper.querySelector('.message-text');
+    const editIcon = messageWrapper.querySelector('.edit-button'); // Locate the edit icon
+
+    // Remove the edit icon from the message wrapper
+    if (editIcon) {
+        messageWrapper.removeChild(editIcon);
+    }
+
+    const inputField = document.createElement('input');
+    inputField.type = 'text';
+    inputField.value = chatItem.message;
+    inputField.classList.add('edit-input');
+
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Save';
+    saveButton.classList.add('save-button');
+
+    // Add editing class to wrapper
+    messageWrapper.classList.add('editing');
+
+    messageWrapper.replaceChild(inputField, messageText);
+    messageWrapper.appendChild(saveButton);
+
+    saveButton.addEventListener('click', () => {
+        const updatedMessage = inputField.value;
+        const currentDate = new Date().toLocaleString();
+
+        if (updatedMessage.length === 0) {
+            // Delete the message if input is empty
+            remove(chatItemRef).then(() => {
+                console.log('Message deleted from the database');
+
+                // Safely check if the parent element exists before removing the wrapper
+                if (messageWrapper.parentElement) {
+                    messageWrapper.parentElement.removeChild(messageWrapper);
+                }
+            }).catch((error) => {
+                console.error('Error deleting message:', error);
+            });
+        } else {
+            // Update the message in the database
+            update(chatItemRef, {
+                message: updatedMessage,
+                date: currentDate
+            }).then(() => {
+                console.log('Message updated in the database');
+
+                // Replace input field and save button with the updated message text
+                messageText.textContent = updatedMessage;
+                messageWrapper.replaceChild(messageText, inputField);
+                messageWrapper.removeChild(saveButton);
+
+                // Remove editing class from wrapper
+                messageWrapper.classList.remove('editing');
+            }).catch((error) => {
+                console.error('Error updating message:', error);
+            });
+        }
     });
 }
 

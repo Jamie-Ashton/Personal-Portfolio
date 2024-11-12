@@ -197,7 +197,8 @@ height: 100vh;
     border-radius: 12px;
     margin: 2px 0;  /* Adjust the vertical margin */
     padding: 5px;
-    word-wrap: break-word; /* Ensure long words break and fit inside */
+    word-wrap: break-word; /* Ensure long words break and fit inside */;
+    
 }
 
 #admin-wrapper {
@@ -262,4 +263,63 @@ height: 100vh;
     margin: 0;
     padding: 2px
 }
+
+.material-symbols-outlined {
+    font-size: 1.2em;
+    color: #1f1f1f;
+    margin: 0;
+    padding: 2px;
+    cursor: pointer;
+}
+
+.edit-input {
+  font-size: 1.2em;
+  color: #1f1f1f;
+  margin: 2px;
+  padding: 2px;
+  border: 2px solid #0000FF; /* Add blue border */
+  background-color: #E2C044;
+  border-color: #2E5266; /* If you still need this for any other purpose */
+  outline: none; /* Remove default outline */
+  word-wrap: break-word;
+}
+
+.editing {
+  display: flex;
+  /* align-items: center; */
+  flex-direction: column;
+  justify-content: space-between; 
+
+}
+
+#signOutBtn, #chat-input-btn {
+  background-color: #4CAF50; /* Fallback color for old browsers */
+  background-image: linear-gradient(45deg, #5096cf, #2196F3); /* Gradient background */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 12px; /* Rounded corners */
+  padding: 10px 20px; /* Padding */
+  font-size: 1.2em; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-image 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
+  box-shadow: 0 0 10px rgba(173, 216, 230, 0.5); /* Light blue box shadow */
+}
+
+#signOutBtn:hover, #chat-input-btn:hover {
+  color: #FFEB3B;
+  transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+#signOutBtn:active, #chat-input-btn:active {
+  /* background-image: linear-gradient(45deg, #FFEB3B, #FFEB3B);  */
+  transform: scale(0.95); /* Slightly scale down on click */
+  
+}
+
+#signOutBtn:focus, #chat-input-btn:focus {
+  outline: none; /* Remove default outline */
+  box-shadow: 0 0 10px rgba(173, 216, 230, 0.5); /* Light blue focus shadow */
+}
+
+
 

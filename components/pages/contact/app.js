@@ -4,6 +4,10 @@ import { getDatabase, ref, push, set, onValue, update, remove } from "https://ww
 
 const database = getDatabase(app);
 
+
+// Initialize the global variable to store the current user
+let currentUser = null;
+
 function showModal() {
     const modal = document.getElementById('myModal');
     modal.style.display = 'block';
@@ -14,11 +18,26 @@ function hideModal() {
     modal.style.display = 'none';
 }
 
+// SECTION: Sign in user and create current user object
 function signInUser() {
     const provider = new GoogleAuthProvider();
-    return signInWithPopup(getAuth(app), provider);
+    return signInWithPopup(getAuth(app), provider)
+        .then((result) => {
+            // Log the user object
+            console.log('User signed in:', result.user);
+
+            // Assign the user object to the global variable
+            currentUser = result.user;
+
+            // Return the result for further chaining if needed
+            return result;
+        })
+        .catch((error) => {
+            console.error('Error signing in:', error);
+        });
 }
 
+// SECTION: Sign out user
 function signOutUser() {
     return signOut(getAuth(app)).then(() => {
         reset(); // Clear the page
@@ -28,6 +47,7 @@ function signOutUser() {
     });
 }
 
+// SECTION: Reset the page
 function reset() {
     const chat = document.getElementById('chat-container');
     chat.innerHTML = '';
@@ -158,7 +178,7 @@ function saveChatMessage(message, result) {
     }
 }
 
-// Function to sanitize input
+// SECTION: Sanitize input
 function sanitize(input) {
     return input.replace(/[&<>"'/]/g, function (match) {
         const escape = {
@@ -172,7 +192,6 @@ function sanitize(input) {
         return escape[match];
     });
 }
-
 
 // SECTION: Load chat messages
 function loadChatMessages(chatDiv, userId) {
@@ -230,19 +249,17 @@ function loadChatMessages(chatDiv, userId) {
                 messageWrapper.appendChild(userElement);
                 messageWrapper.appendChild(messageText);
                 messageWrapper.appendChild(messageDate);
-                if (userId) {
+                if (currentUser.uid === chatItem.uid) {
                     messageWrapper.appendChild(editIcon);
                 };
-                console.log(isUserMessage);
-                console.log(userId)
+                console.log(currentUser.uid);
+
                 // Append the wrapper to the chatDiv
                 chatDiv.appendChild(messageWrapper);
             }
         });
     });
 }
-
-
 
 // SECTION: Load contacts
 function loadContacts() {
@@ -282,10 +299,6 @@ function loadContacts() {
     });
 }
 
-
-
-
-// ADDITIONAL: check to make sure the current user matches user chat id before allowing them to edit...
 // SECTION: Edit messages
 function editMessage(chatItem, chatItemRef) {
     console.log('Edit message:', chatItem.message);

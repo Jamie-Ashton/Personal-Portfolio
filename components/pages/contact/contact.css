@@ -249,12 +249,16 @@ height: 100vh;
 }
 
 #contactList {
-    width: 70%; /* Full width */
-    border-radius: 12px; /* Rounded corners */
-    border: 1px solid #747775; /* Border color matching your theme */
-    background-color: #E2C044; /* Background color */
-    color: #1f1f1f; /* Text color */
-    font-size: 1.2em; /* Font size matching your theme */
+  background-color: #4CAF50; /* Fallback color for old browsers */
+  background-image: linear-gradient(45deg, #5096cf, #2196F3); /* Gradient background */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 12px; /* Rounded corners */
+  padding: 10px 20px; /* Padding */
+  font-size: 1.2em; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-image 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
+  box-shadow: 0 0 10px rgba(173, 216, 230, 0.5); /* Light blue box shadow */
 }
 
 .message-text {
@@ -292,34 +296,61 @@ height: 100vh;
 
 }
 
-#signOutBtn, #chat-input-btn {
-  background-color: #4CAF50; /* Fallback color for old browsers */
-  background-image: linear-gradient(45deg, #5096cf, #2196F3); /* Gradient background */
-  color: white; /* Text color */
+#signOutBtn, #chat-input-btn, #contactList {
+  background-color: #E2C044; /* Fallback color */
+  background-image: linear-gradient(45deg, #E2C044, #E2C044); /* Solid background color using gradient */
+  color: #1f1f1f; /* Text color */
   border: none; /* No border */
   border-radius: 12px; /* Rounded corners */
   padding: 10px 20px; /* Padding */
   font-size: 1.2em; /* Font size */
   cursor: pointer; /* Pointer cursor on hover */
   transition: background-image 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
-  box-shadow: 0 0 10px rgba(173, 216, 230, 0.5); /* Light blue box shadow */
+  box-shadow: 0 0 10px rgba(226, 192, 68, 0.5); /* Matching box shadow */
 }
 
-#signOutBtn:hover, #chat-input-btn:hover {
-  color: #FFEB3B;
+#signOutBtn:hover, #chat-input-btn:hover, #contactList:hover {
+  background-image: linear-gradient(45deg, #FFC107, #E2C044); /* Lighter gradient on hover */
+  color: #1f1f1f;
   transform: scale(1.05); /* Slightly scale up on hover */
 }
 
-#signOutBtn:active, #chat-input-btn:active {
-  /* background-image: linear-gradient(45deg, #FFEB3B, #FFEB3B);  */
+#signOutBtn:active, #chat-input-btn:active, #contactList:active {
+  background-image: linear-gradient(45deg, #FFA000, #E2C044); /* Darker gradient on active */
   transform: scale(0.95); /* Slightly scale down on click */
-  
 }
 
-#signOutBtn:focus, #chat-input-btn:focus {
+#signOutBtn:focus, #chat-input-btn:focus, #contactList:focus {
   outline: none; /* Remove default outline */
-  box-shadow: 0 0 10px rgba(173, 216, 230, 0.5); /* Light blue focus shadow */
+  box-shadow: 0 0 10px rgba(226, 192, 68, 0.5); /* Matching focus shadow */
 }
+
+@keyframes rotateBackAndForth {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+#chat-container .edit-button {
+  font-size: 1.2em;
+  color: #1f1f1f;
+  margin: 0;
+  padding: 2px;
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out; /* Smooth transition */
+}
+
+#chat-container .edit-button:hover {
+  animation: rotateBackAndForth 1s infinite; /* Apply the animation on hover */
+}
+
+
 
 
 

@@ -127,29 +127,51 @@ function saveChatMessage(message, result) {
     const chatRef = ref(database, 'chat');
     const newChatRef = push(chatRef);
     const currentDate = new Date().toLocaleString();
-    
+
+    // Sanitize input
+    const sanitizedMessage = sanitize(message);
+    const sanitizedDisplayName = sanitize(result.user.displayName);
+    const sanitizedUid = sanitize(result.user.uid);
+    const sanitizedEmail = sanitize(result.user.email);
+
     // Check if the user is admin
-    if(result.user.uid === 'yfu9ldpAkpQwqKlDkzXdsgHJDo32'){
+    if (sanitizedUid === 'yfu9ldpAkpQwqKlDkzXdsgHJDo32') {
         // Get the selected value from the dropdown
         const selectedEmail = document.getElementById('contactList').value;
+        const sanitizedSelectedEmail = sanitize(selectedEmail);
+
         set(newChatRef, {
-            message: message,
-            user: result.user.displayName,
+            message: sanitizedMessage,
+            user: sanitizedDisplayName,
             date: currentDate,
-            uid: result.user.uid,
-            select: selectedEmail 
+            uid: sanitizedUid,
+            select: sanitizedSelectedEmail 
         });
     } else {
         set(newChatRef, {
-            message: message,
-            user: result.user.displayName,
+            message: sanitizedMessage,
+            user: sanitizedDisplayName,
             date: currentDate,
-            uid: result.user.uid,
-            email: result.user.email
+            uid: sanitizedUid,
+            email: sanitizedEmail
         });
     }
 }
 
+// Function to sanitize input
+function sanitize(input) {
+    return input.replace(/[&<>"'/]/g, function (match) {
+        const escape = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+            '/': '&#x2F;'
+        };
+        return escape[match];
+    });
+}
 
 
 // SECTION: Load chat messages
@@ -208,8 +230,11 @@ function loadChatMessages(chatDiv, userId) {
                 messageWrapper.appendChild(userElement);
                 messageWrapper.appendChild(messageText);
                 messageWrapper.appendChild(messageDate);
-                messageWrapper.appendChild(editIcon);  // Append the Material Icon
-
+                if (userId) {
+                    messageWrapper.appendChild(editIcon);
+                };
+                console.log(isUserMessage);
+                console.log(userId)
                 // Append the wrapper to the chatDiv
                 chatDiv.appendChild(messageWrapper);
             }

@@ -269,7 +269,7 @@ function loadContacts() {
 
     onValue(chatRef, (snapshot) => {
         const uniqueUsers = new Map(); // Use a Map to store unique users by their UID
-        
+
         snapshot.forEach((childSnapshot) => {
             const chatItem = childSnapshot.val();
             if (chatItem.uid !== adminUID && chatItem.email && !uniqueUsers.has(chatItem.uid)) {
@@ -279,10 +279,15 @@ function loadContacts() {
 
         // Log the unique UIDs and users
         console.log('Unique Users:', Array.from(uniqueUsers.entries())); // Convert Map to array and log entries
-        
-        // Clear existing options
+
+        // Get the contactList element
         const contactList = document.getElementById('contactList');
+        // Save the selected value
+        const selectedValue = contactList.value;
+
+        // Clear existing options and deselect
         contactList.innerHTML = '';
+        contactList.selectedIndex = -1;  // Deselect any default selection
 
         // Append emails to contact list
         uniqueUsers.forEach((email, uid) => {
@@ -294,10 +299,16 @@ function loadContacts() {
             }
         });
 
-        // Reset the dropdown selection to ensure the user can select an option
-        contactList.selectedIndex = -1; // Deselect any default selection
+        // Re-select the previously selected value, if it exists
+        if (selectedValue && contactList.options.length > 0) {
+            contactList.value = selectedValue;
+        } else {
+            contactList.selectedIndex = -1;  // Ensure no selection if nothing is saved
+        }
     });
 }
+
+
 
 // SECTION: Edit messages
 function editMessage(chatItem, chatItemRef) {

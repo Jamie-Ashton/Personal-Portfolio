@@ -1,6 +1,8 @@
 import { app } from "../../../scripts/firebaseSDK.js";
-import { GoogleAuthProvider, getAuth, createUserWithEmailAndPassword, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { getDatabase, ref, push, set, onValue, update, remove } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+import { GoogleAuthProvider, getAuth, createUserWithEmailAndPassword, signInWithPopup, signOut } 
+from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { getDatabase, ref, push, set, onValue, update, remove } from 
+"https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
 const database = getDatabase(app);
 
@@ -53,7 +55,6 @@ function reset() {
     chat.innerHTML = '';
     // This will refresh the page
     location.reload();
-
 }
 
 // SECTION: Creating chat 
@@ -156,10 +157,10 @@ function saveChatMessage(message, result) {
 
     // Check if the user is admin
     if (sanitizedUid === 'yfu9ldpAkpQwqKlDkzXdsgHJDo32') {
-        // Get the selected value from the dropdown
+        // Get the selected value from the dropdown and display the messages from them
         const selectedEmail = document.getElementById('contactList').value;
         const sanitizedSelectedEmail = sanitize(selectedEmail);
-
+        // Admin account saved message
         set(newChatRef, {
             message: sanitizedMessage,
             user: sanitizedDisplayName,
@@ -167,6 +168,7 @@ function saveChatMessage(message, result) {
             uid: sanitizedUid,
             select: sanitizedSelectedEmail 
         });
+        // User account saved message
     } else {
         set(newChatRef, {
             message: sanitizedMessage,
@@ -180,75 +182,121 @@ function saveChatMessage(message, result) {
 
 // SECTION: Sanitize input
 function sanitize(input) {
-    return input.replace(/[&<>"'/]/g, function (match) {
+    return input.replace(/[&<>"'/;(){}[\]\\`@$%!]/g, function (match) {
         const escape = {
             '&': '&amp;',
             '<': '&lt;',
             '>': '&gt;',
             '"': '&quot;',
             "'": '&#39;',
-            '/': '&#x2F;'
+            '/': '&#x2F;',
+            ';': '&#59;',
+            '(': '&#40;',
+            ')': '&#41;',
+            '{': '&#123;',
+            '}': '&#125;',
+            '[': '&#91;',
+            ']': '&#93;',
+            '\\': '&#92;',
+            '`': '&#96;',
+            '@': '&#64;',
+            '$': '&#36;',
+            '%': '&#37;',
+            '!': '&#33;'
         };
         return escape[match];
     });
 }
 
+// SECTION: Decode sanitized input
+function decode(input) {
+    const reverseEscape = {
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#39;': "'",
+        '&#x2F;': '/',
+        '&#59;': ';',
+        '&#40;': '(',
+        '&#41;': ')',
+        '&#123;': '{',
+        '&#125;': '}',
+        '&#91;': '[',
+        '&#93;': ']',
+        '&#92;': '\\',
+        '&#96;': '`',
+        '&#64;': '@',
+        '&#36;': '$',
+        '&#37;': '%',
+        '&#33;': '!'
+    };
+    
+    return input.replace(/(&amp;|&lt;|&gt;|&quot;|&#39;|&#x2F;|&#59;|&#40;|&#41;|&#123;|&#125;|&#91;|&#93;|&#92;|&#96;|&#64;|&#36;|&#37;|&#33;)/g, function (match) {
+        return reverseEscape[match];
+    });
+}
+
 // SECTION: Load chat messages
 function loadChatMessages(chatDiv, userId) {
-    const database = getDatabase(app);
-    const chatRef = ref(database, 'chat');
+    const database = getDatabase(app); // Firestore reference
+    const chatRef = ref(database, 'chat'); // Real time database collection
     const adminUID = 'yfu9ldpAkpQwqKlDkzXdsgHJDo32';  // Admin UID
 
+    // Listen for changes to the chat collection
     onValue(chatRef, (snapshot) => {
         chatDiv.innerHTML = '';  // Clear current chat display
 
         snapshot.forEach((childSnapshot) => {
+
             const chatItem = childSnapshot.val();
             
-            // Check if the message is from the user or to the user from the admin
+            // Check if the message object is from the current user or admin
             const isUserMessage = chatItem.uid === userId;
             const isAdminMessage = chatItem.select === userId;
 
+            // Create Div to hold message
             if (isUserMessage || isAdminMessage) {
                 const messageWrapper = document.createElement('div');
                 messageWrapper.classList.add('message-wrapper');
 
-                // User element
+                // Add user name 
                 const userElement = document.createElement('span');
                 userElement.textContent = chatItem.user;
                 userElement.classList.add('message-user');
                 
-                // Message text element
+                // Add message text 
                 const messageText = document.createElement('p');
                 messageText.innerHTML = `${chatItem.message}`;
                 messageText.classList.add('message-text');
                 
-                // Date element
+                // Add date to message
                 const messageDate = document.createElement('span');
                 messageDate.textContent = chatItem.date;
                 messageDate.id = 'message-date';
 
-                // Material icon element
+                // Add edit icon to message
                 const editIcon = document.createElement('span');
                 editIcon.classList.add('material-symbols-outlined', 'edit-button');
                 editIcon.textContent = 'edit';
 
-                // Set different classes based on who wrote the message
+                // Set different id for user and admin
                 if (chatItem.uid === userId) {
                     userElement.id = 'user-user';
-                    messageWrapper.id = 'user-wrapper';  // ID for the user wrapper
+                    messageWrapper.id = 'user-wrapper';  
                 } else if (chatItem.uid === adminUID) {
                     userElement.id = 'admin-user';
-                    messageWrapper.id = 'admin-wrapper';  // ID for the admin wrapper
+                    messageWrapper.id = 'admin-wrapper';  
                 }
                 
-                // Pass the chatItemRef to the editMessage function
+                // Listen for click event on edit icon
                 editIcon.addEventListener('click', () => editMessage(chatItem, childSnapshot.ref));
 
                 // Append elements to the wrapper
                 messageWrapper.appendChild(userElement);
                 messageWrapper.appendChild(messageText);
                 messageWrapper.appendChild(messageDate);
+                // Append edit icon only if the current user is the author of the message
                 if (currentUser.uid === chatItem.uid) {
                     messageWrapper.appendChild(editIcon);
                 };
@@ -264,7 +312,7 @@ function loadChatMessages(chatDiv, userId) {
 // SECTION: Load contacts
 function loadContacts() {
     const database = getDatabase(app);  // Initialize the database
-    const chatRef = ref(database, 'chat');  // Reference the 'chat' path
+    const chatRef = ref(database, 'chat');  // Reference the collection
     const adminUID = 'yfu9ldpAkpQwqKlDkzXdsgHJDo32'; // Define the admin UID
 
     onValue(chatRef, (snapshot) => {
@@ -323,9 +371,10 @@ function editMessage(chatItem, chatItemRef) {
         messageWrapper.removeChild(editIcon);
     }
 
+    const originalMessage = decode(chatItem.message);
     const inputField = document.createElement('input');
     inputField.type = 'text';
-    inputField.value = chatItem.message;
+    inputField.value = originalMessage;
     inputField.classList.add('edit-input');
 
     const saveButton = document.createElement('button');
@@ -339,7 +388,7 @@ function editMessage(chatItem, chatItemRef) {
     messageWrapper.appendChild(saveButton);
 
     saveButton.addEventListener('click', () => {
-        const updatedMessage = inputField.value;
+        const updatedMessage = sanitize(inputField.value);
         const currentDate = new Date().toLocaleString();
 
         if (updatedMessage.length === 0) {
@@ -375,6 +424,8 @@ function editMessage(chatItem, chatItemRef) {
         }
     });
 }
+
+
 
 document.addEventListener('DOMContentLoaded', function () {
     showModal();

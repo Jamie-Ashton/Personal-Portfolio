@@ -209,33 +209,7 @@ function sanitize(input) {
 }
 
 // SECTION: Decode sanitized input
-function decode(input) {
-    const reverseEscape = {
-        '&amp;': '&',
-        '&lt;': '<',
-        '&gt;': '>',
-        '&quot;': '"',
-        '&#39;': "'",
-        '&#x2F;': '/',
-        '&#59;': ';',
-        '&#40;': '(',
-        '&#41;': ')',
-        '&#123;': '{',
-        '&#125;': '}',
-        '&#91;': '[',
-        '&#93;': ']',
-        '&#92;': '\\',
-        '&#96;': '`',
-        '&#64;': '@',
-        '&#36;': '$',
-        '&#37;': '%',
-        '&#33;': '!'
-    };
-    
-    return input.replace(/(&amp;|&lt;|&gt;|&quot;|&#39;|&#x2F;|&#59;|&#40;|&#41;|&#123;|&#125;|&#91;|&#93;|&#92;|&#96;|&#64;|&#36;|&#37;|&#33;)/g, function (match) {
-        return reverseEscape[match];
-    });
-}
+
 
 // SECTION: Load chat messages
 function loadChatMessages(chatDiv, userId) {
@@ -310,6 +284,34 @@ function loadChatMessages(chatDiv, userId) {
 }
 
 // SECTION: Load contacts
+function decode(input) {
+    const reverseEscape = {
+        '&amp;': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&#39;': "'",
+        '&#x2F;': '/',
+        '&#59;': ';',
+        '&#40;': '(',
+        '&#41;': ')',
+        '&#123;': '{',
+        '&#125;': '}',
+        '&#91;': '[',
+        '&#93;': ']',
+        '&#92;': '\\',
+        '&#96;': '`',
+        '&#64;': '@',
+        '&#36;': '$',
+        '&#37;': '%',
+        '&#33;': '!'
+    };
+    
+    return input.replace(/(&amp;|&lt;|&gt;|&quot;|&#39;|&#x2F;|&#59;|&#40;|&#41;|&#123;|&#125;|&#91;|&#93;|&#92;|&#96;|&#64;|&#36;|&#37;|&#33;)/g, function (match) {
+        return reverseEscape[match];
+    });
+}
+
 function loadContacts() {
     const database = getDatabase(app);  // Initialize the database
     const chatRef = ref(database, 'chat');  // Reference the collection
@@ -342,7 +344,7 @@ function loadContacts() {
             if (email && email !== 'undefined') { // Ensure the email is not undefined or an empty string
                 const option = document.createElement('option');
                 option.value = uid;
-                option.textContent = email;
+                option.textContent = decode(email); // Decode the email before displaying
                 contactList.appendChild(option);
             }
         });
@@ -355,6 +357,7 @@ function loadContacts() {
         }
     });
 }
+
 
 
 

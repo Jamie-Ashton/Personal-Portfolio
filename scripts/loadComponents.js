@@ -18,7 +18,8 @@ function loadComponent(elementId, filePath) {
 
 // Load the components when the window has finished loading
 window.onload = function () {
-    loadComponent('header', '../../../components/header/header.html'); // Load the header component into the div with ID 'header'
-    loadComponent('footer', '../../../components/footer/footer.html'); // Load the footer component into the div with ID 'footer'
+    loadComponent('header', '../../../components/header/header.html'); // Use absolute path
+    loadComponent('footer', '../../../components/footer/footer.html'); // Use absolute path
 };
+
 

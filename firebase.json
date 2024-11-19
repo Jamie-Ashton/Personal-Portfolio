@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "public": "public",
+    "redirects": [
+      {
+        "source": "/",
+        "destination": "/components/pages/home/index.html",
+        "type": 301
+      }
+    ]
+  }
+}
+

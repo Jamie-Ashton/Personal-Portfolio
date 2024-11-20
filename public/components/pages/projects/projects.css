@@ -16,7 +16,7 @@ main {
     background-color: #2E5266;
     border-radius: 20px;
     width: 90%;
-    height: 80%;
+    height: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -35,3 +35,10 @@ main {
     border-radius: 20px;
     padding: 0;
   }
+
+.project img {
+    max-width: 100%; /* Make the image responsive */
+    height: auto; /* Maintain the aspect ratio */
+    display: block; /* Remove inline-block spacing */
+    margin: 0 auto; /* Center the image horizontally */
+}

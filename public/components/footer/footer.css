@@ -1,4 +1,5 @@
 #footer {
+    position: absolute;
     bottom: 0;
     height: auto; /* Change this to auto to let the content dictate the height */
     background-color: #2E5266;
@@ -15,6 +16,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* padding: 0;
-    margin: 0; */
 }

@@ -3,6 +3,7 @@ body {
   font-family: 'JetBrains Mono', monospace;
   padding: 0;
   margin: 0;
+  height: auto;
 }
 
 main {
@@ -146,6 +147,20 @@ main {
 @media screen and (max-width: 685px) {
   .skill-container h2 {
     font-size: 0.9em; /* Adjust font size for smaller screens */
+  }
+
+  .material-symbols-outlined {
+    font-size: 0.8em; /* Adjust icon size for smaller screens */
+  }
+
+  .skill-container p {
+    font-size: 0.8em; /* Adjust paragraph font size for smaller screens */
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .skill-container h2 {
+    font-size: 0.8em; /* Adjust font size for smaller screens */
   }
 
   .material-symbols-outlined {

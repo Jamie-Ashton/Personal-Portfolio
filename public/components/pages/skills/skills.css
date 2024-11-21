@@ -7,7 +7,7 @@ body {
 
 main {
   display: flex;
-  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   height: auto;
@@ -24,7 +24,7 @@ main {
   border-radius: 20px;
   margin: 1em;
   margin-top: 3em;
-  flex: 1 1 calc(50% - 2em); /* Adjust the width to fit 2 columns */
+  flex: 1 1 calc(50% - 2em);
   box-shadow: 5px 18px 30px black;
 }
 
@@ -37,9 +37,9 @@ main {
 .skill-container:nth-child(14),
 .skill-container:nth-child(15),
 .skill-container:nth-child(18) {
-  background-color: transparent; /* Make every second container blank */
-  border: none; /* Remove the border if any */
-  box-shadow: none; /* Remove the shadow if any */
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .container .icon {
@@ -51,7 +51,6 @@ main {
   direction: row;
 }
 
-
 .skill-container h2 {
   color: #E2C044;
   display: flex;
@@ -60,7 +59,6 @@ main {
   font-style: italic;
   font-weight: bold;
 }
-
 
 .material-symbols-outlined {
   padding: 0.2em;
@@ -74,5 +72,88 @@ main {
   justify-content: center;
   align-items: center;
   font-weight: lighter;
+}
+
+/* Media query for screens smaller than 600px */
+@media screen and (max-width: 1133px) {
+  .skill-container h2 {
+    font-size: 1.5em; /* Adjust font size for smaller screens */
+  }
+
+  .material-symbols-outlined {
+    font-size: 1.8em; /* Adjust icon size for smaller screens */
+  }
+
+  .skill-container p {
+    font-size: 1em; /* Adjust paragraph font size for smaller screens */
+  }
+}
+
+@media screen and (max-width: 1045px) {
+  .skill-container h2 {
+    font-size: 1.3em; /* Adjust font size for smaller screens */
+  }
+
+  .material-symbols-outlined {
+    font-size: 1.6em; /* Adjust icon size for smaller screens */
+  }
+
+  .skill-container p {
+    font-size: 0.8em; /* Adjust paragraph font size for smaller screens */
+  }
+}
+@media screen and (max-width: 955px) {
+  .skill-container h2 {
+    font-size: 1.1em; /* Adjust font size for smaller screens */
+  }
+
+  .material-symbols-outlined {
+    font-size: 1.4em; /* Adjust icon size for smaller screens */
+  }
+
+  .skill-container p {
+    font-size: 0.8em; /* Adjust paragraph font size for smaller screens */
+  }
+}
+@media screen and (max-width: 867px) {
+  .skill-container h2 {
+    font-size: 0.9em; /* Adjust font size for smaller screens */
+  }
+
+  .material-symbols-outlined {
+    font-size: 1.2em; /* Adjust icon size for smaller screens */
+  }
+
+  .skill-container p {
+    font-size: 0.8em; /* Adjust paragraph font size for smaller screens */
+  }
+}
+
+@media screen and (max-width: 776px) {
+  .skill-container h2 {
+    font-size: 0.9em; /* Adjust font size for smaller screens */
+  }
+
+  .material-symbols-outlined {
+    font-size: 1.0em; /* Adjust icon size for smaller screens */
+  }
+
+  .skill-container p {
+    font-size: 0.8em; /* Adjust paragraph font size for smaller screens */
+  }
+}
+
+@media screen and (max-width: 685px) {
+  .skill-container h2 {
+    font-size: 0.9em; /* Adjust font size for smaller screens */
+  }
+
+  .material-symbols-outlined {
+    font-size: 0.8em; /* Adjust icon size for smaller screens */
+  }
+
+  .skill-container p {
+    font-size: 0.8em; /* Adjust paragraph font size for smaller screens */
+  }
 }
 

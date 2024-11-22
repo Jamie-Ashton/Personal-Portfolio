@@ -3,9 +3,7 @@ import { GoogleAuthProvider, getAuth, createUserWithEmailAndPassword, signInWith
 from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 import { getDatabase, ref, push, set, onValue, update, remove } from 
 "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-import { initializeAppCheck, ReCaptchaV3Provider } 
-from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app-check.js";
-
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app-check.js";
 const database = getDatabase(app);
 
 
@@ -22,41 +20,39 @@ function hideModal() {
     modal.style.display = 'none';
 }
 
-// Initialize Firebase App Check with reCAPTCHA v3
-const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider('6Lc4koYqAAAAAPIH2haJ5pJNbwsAyUAOY5aeX93J'),
-    isTokenAutoRefreshEnabled: true // Optional: Automatically refresh the token
+
+const app = initializeApp({
+    // Your firebase configuration object
   });
   
+  // Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
+  // key is the counterpart to the secret key you set in the Firebase console.
+  const appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider('abcdefghijklmnopqrstuvwxy-1234567890abcd'),
+  
+    // Optional argument. If true, the SDK automatically refreshes App Check
+    // tokens as needed.
+    isTokenAutoRefreshEnabled: true
+  });
 
-// Function to generate reCAPTCHA token and sign in user
+
+// SECTION: Sign in user and create current user object
 function signInUser() {
-    grecaptcha.ready(function() {
-        grecaptcha.execute('6Lc4koYqAAAAAPIH2haJ5pJNbwsAyUAOY5aeX93J', { action: 'signIn' }).then(function(token) {
-            // Verify the reCAPTCHA token
-            verifyRecaptchaToken(token).then(() => {
-                const provider = new GoogleAuthProvider();
-                return signInWithPopup(getAuth(app), provider)
-                    .then((result) => {
-                        console.log('User signed in:', result.user);
-                        currentUser = result.user;
-                        return result;
-                    })
-                    .catch((error) => {
-                        console.error('Error signing in:', error);
-                    });
-            }).catch((error) => {
-                console.error('Error verifying reCAPTCHA token:', error);
-            });
-        });
-    });
-}
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(getAuth(app), provider)
+        .then((result) => {
+            // Log the user object
+            console.log('User signed in:', result.user);
 
-// Function to verify reCAPTCHA token
-async function verifyRecaptchaToken(token) {
-    // This function should send the token to your server and verify it with Firebase
-    // For the purpose of this example, we assume the verification is successful
-    return Promise.resolve(true);
+            // Assign the user object to the global variable
+            currentUser = result.user;
+
+            // Return the result for further chaining if needed
+            return result;
+        })
+        .catch((error) => {
+            console.error('Error signing in:', error);
+        });
 }
 
 

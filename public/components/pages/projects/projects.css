@@ -9,7 +9,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 
 .project-container {
@@ -21,6 +20,8 @@ main {
     flex-wrap: wrap;
     justify-content: space-between;
     max-width: 2060px;
+    margin: 10px;
+    padding: 3px;
 }
 
 .project {
@@ -34,7 +35,7 @@ main {
     text-align: center; /* Center text within each project */
     background-color: #6E8898;
     border-radius: 20px;
-    padding: 0;
+    padding: 3px;
   }
 
 .project img {
@@ -43,3 +44,22 @@ main {
     display: block; /* Remove inline-block spacing */
     margin: 0 auto; /* Center the image horizontally */
 }
+
+@media screen and (max-width: 530px) {
+  .project {
+      flex: 1 1 calc(50% - 1em); /* Make each project take up approximately half the width */
+      margin: 0.5em; /* Add some margin between items */
+  }
+}
+
+
+@media screen and (max-width: 430px) {
+  .project {
+      flex: 1 1 100%; /* Make each project take up 100% width */
+      margin: 0.5em 0; /* Add some vertical margin between items if needed */
+  }
+}
+
+
+
+
